@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>晨枫的个人网页</title>
+  <!-- 引入你的独立CSS文件（替换成你实际的CSS文件路径） -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- 引入Font Awesome图标库（按钮图标需要） -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .main-content{
+    position: absolute; /* 和页面其他元素层级统一 */
+    top: 50%; /* 垂直居中基准 */
+    left: 50%; /* 水平居中基准 */
+    transform: translate(-50%, -50%); /* 精准居中 */
+    z-index: 1; /* 保证文字在背景之上 */
+    width: 100%; /* 占满宽度，方便文字居中 */
+    text-align: center; 
+    
+    }
+
+    .main-content h1{
+        font-size: 80px;
+        color: rgba(255, 255, 255, 0.7)
+    }
+
+     .main-content h2{
+        font-size: 40px;
+        color: rgba(255, 255, 255, 0.7)
+    }
+    
+
+
+  </style>
+</head>
+<body>
+  <!-- 导航条（保留框架，可修改导航项/跳转地址） -->
+  <header>
+    <nav>
+      <a class="nav-items" href="index.html">首页</a>
+      <a class="nav-items active">关于我</a>
+      <a class="nav-items" href="works.html">作品集</a>
+      <a class="nav-items">经历</a>
+      <a class="nav-items">联系方式</a>
+    </nav>
+  </header>
+
+  <!-- 中间内容区（完全留空，你自由创作） -->
+  <div class="main-content">
+    <h1>离异带俩娃</h1>
+    <h2>-我不是gay，我不想继承图灵之力-</h2>
+  </div>
+
+  <!-- 底部跳转按钮（保留框架，改href即可） -->
+  <div class="cta">
+    <a href="#your-target" target="_self"> <!-- 替换成你的跳转地址 -->
+      <button>
+        探索更多
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>晨枫 - 作品集</title>
+  <!-- 引入你的CSS文件 -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- 引入Font Awesome图标 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* 仅新增作品展示区样式，不改动原有CSS */
+    .works-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      width: 90%;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 20px 0;
+    }
+
+    .work-card {
+      border-radius: 16px;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+      background-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: bottomInText 1s ease-out forwards;
+    }
+
+    /* 给每个作品卡片加不同延迟，分层入场 */
+    .work-card:nth-child(1) { animation-delay: 0.2s; }
+    .work-card:nth-child(2) { animation-delay: 0.4s; }
+    .work-card:nth-child(3) { animation-delay: 0.6s; }
+    .work-card:nth-child(4) { animation-delay: 0.8s; }
+    .work-card:nth-child(5) { animation-delay: 1.0s; }
+    .work-card:nth-child(6) { animation-delay: 1.2s; }
+
+    .work-card:hover {
+    transform: translateY(-30px) scale(1.03); /* 上浮15px + 放大3% */
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5); /* 阴影更明显，增强悬浮感 */
+    background-color: rgba(255, 255, 255, 0.12); /* 背景轻微提亮 */
+}
+
+    .work-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .work-info {
+      padding: 20px;
+      color: white;
+    }
+
+    .work-title {
+      font-size: 18px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .work-desc {
+      font-size: 14px;
+      letter-spacing: 1px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .work-tag {
+      display: inline-block;
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background-color: rgba(22, 66, 60, 0.6);
+      color: white;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    #hainan {
+  /* 其他样式不变 */
+  object-position: center 85%; /* 水平居中，垂直偏上20%，聚焦水面 */
+}
+
+    /* 适配小屏幕 */
+    @media (max-width: 768px) {
+      .works-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      .work-img {
+        height: 180px;
+      }
+    }
+
+    /* 让原有的卡片显示为可点击的手型 */
+    .work-card {
+      cursor: pointer;
+    }
+
+    /* 弹窗背景遮罩 */
+    .modal {
+      display: none; /* 默认隐藏 */
+      position: fixed;
+      z-index: 9999; /* 确保在最顶层 */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85); /* 半透明黑色 */
+      backdrop-filter: blur(8px); /* 延续你之前的毛玻璃高级感 */
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      /* 使用flex居中 */
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* 弹窗内的图片 - 中等大小 */
+    .modal-content {
+      max-width: 75%; /* 限制宽度，呈现中等大小 */
+      max-height: 80vh; /* 限制高度，防止超出屏幕 */
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+      object-fit: contain;
+      transform: scale(0.8); /* 初始缩小，配合弹出动画 */
+      transition: transform 0.3s ease;
+    }
+
+    /* 关闭按钮 */
+    .close-btn {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: #ffffff;
+      font-size: 45px;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10000;
+    }
+
+    .close-btn:hover {
+      color: #cccccc;
+      transform: scale(1.1);
+    }
+
+
+
+  </style>
+</head>
+<body>
+  <!-- 导航栏：作品集高亮 -->
+  <header>
+    <nav>
+      <a href="index.html">首页</a>
+      <a href="about.html">关于我</a>
+      <a href="works.html" class="active">作品集</a>
+      <a href="experience.html">经历</a>
+      <a href="contact.html">联系方式</a>
+    </nav>
+  </header>
+
+  <!-- 作品展示核心区 -->
+  <div class="works-container">
+    <!-- 作品卡片1 -->
+    <div class="work-card" data-img="hongkong.jpg">
+      <img src="hongkong.jpg" alt="山林雾境" class="work-img">
+      <div class="work-info">
+        <h3 class="work-title">香港</h3>
+        <div class="work-tag">自然风光</div>
+        <div class="work-tag">胶片摄影</div>
+        <p class="work-desc">香港独特的街景和中西混合的文化氛围十分适合扫街拍照</p>
+      </div>
+    </div>
+    <!-- 作品卡片2 -->
+    <div class="work-card">
+      <img src="hainan.jpg" alt="海边落日" class="work-img" id="hainan">
+      <div class="work-info">
+        <h3 class="work-title">海南</h3>
+        <div class="work-tag">人文摄影</div>
+        <div class="work-tag">色彩捕捉</div>
+        <p class="work-desc">日落剪影是我很喜欢的一个题材，但是要让画面“活”起来并不容易</p>
+      </div>
+    </div>
+    <!-- 作品卡片3 -->
+    <div class="work-card">
+      <img src="gansu.jpg" alt="海边落日" class="work-img">
+      <div class="work-info">
+        <h3 class="work-title">甘肃</h3>
+        <div class="work-tag">人文摄影</div>
+        <div class="work-tag">色彩捕捉</div>
+        <p class="work-desc">西北的苍凉壮阔要切身感受才能明白</p>
+      </div>
+    </div>
+    <!-- 可继续添加更多作品卡片 -->
+    <div class="work-card">
+      <img src="shanghai.jpg" alt="城市微光" class="work-img">
+      <div class="work-info">
+        <h3 class="work-title">上海</h3>
+        <div class="work-tag">街头摄影</div>
+        <div class="work-tag">城市景观</div>
+        <p class="work-desc">上海丰富的历史造就了它的文化氛围，除了深圳我最喜欢这里</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部按钮（跳转至详情/联系我） -->
+  <div class="cta">
+    <a href="contact.html" target="_self">
+      <button>
+        探索更多
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </a>
+  </div>
+
+  
+
+
+
+
+
+    <div id="imageModal" class="modal">
+    <span class="close-btn">&times;</span>
+    <img class="modal-content" id="modalImg">
+  </div>
+
+  <script>
+    // 获取相关DOM元素
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImg");
+    const closeBtn = document.querySelector(".close-btn");
+    const workCards = document.querySelectorAll(".work-card");
+
+    // 给每个卡片绑定点击事件
+    workCards.forEach(card => {
+      card.addEventListener("click", function() {
+        // 获取当前点击卡片内的 img 标签的 src
+        const imgSrc = this.querySelector(".work-img").src;
+        
+        // 将获取到的路径赋值给弹窗里的图片
+        modalImg.src = imgSrc;
+        
+        // 展现弹窗（带有平滑过渡动画）
+        modal.style.display = "flex";
+        // 延迟一点点应用透明度和缩放，以触发CSS过渡动画
+        setTimeout(() => {
+          modal.style.opacity = "1";
+          modalImg.style.transform = "scale(1)";
+        }, 10);
+      });
+    });
+
+    // 关闭弹窗的公共函数
+    function closeModal() {
+      modal.style.opacity = "0";
+      modalImg.style.transform = "scale(0.8)";
+      // 等待动画结束（0.3秒）后隐藏元素
+      setTimeout(() => {
+        modal.style.display = "none";
+      }, 300);
+    }
+
+    // 1. 点击右上角 X 关闭
+    closeBtn.addEventListener("click", closeModal);
+
+    // 2. 点击弹窗空白背景处也关闭
+    modal.addEventListener("click", function(event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+  </script>
+
+</body>
+</html>
